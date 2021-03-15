@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+  <link rel="stylesheet" href="./css/style.css">
+  <title>Rock-Paper-Scissors</title>
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <div class="score-board">
+        <div class="score-board-left">
+          <h1>Rock</h1>
+          <h1>Paper</h1>
+          <h1>Scissors</h1>
+        </div>
+        <div class="score-board-right">
+          <h3>Score</h3>
+          <h1 class="score" id="score">0</h1>
+        </div>
+      </div>
+      <main>
+        <div class="triangle-bg" id="triangle">
+          <img src="./images/bg-triangle.svg" alt="">
+          <div class="shapes">
+            <div class="paper shape" id="paper"></div>
+            <div class="scissors shape" id="scissors"></div>
+            <div class="rock shape" id="rock"></div>
+          </div>
+        </div>
+        <div class="result" id="result"></div>
+      </main>
+    </div>
+    <div class="rules" id="rules">Rules</div>
+  </header>
+
+
+  <div class="modal" id="modal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h1>Rules</h1>
+        <i class="fas fa-times fa-2x" id="close-modal"></i>
+      </div>
+      <div class="modal-body">
+        <img src="./images/image-rules.svg" alt="">
+      </div>
+    </div>
+  </div>
+
+
+  <div class="attribution">
+    Challenge by
+    <a href="https://www.frontendmentor.io?ref=challenge" target="_blank"
+      >Frontend Mentor</a
+    >. Coded by <a href="#">Emre Süslü</a>.
+  </div>
+  
+  <script src="./js/app.js"></script>
+</body>
+</html>

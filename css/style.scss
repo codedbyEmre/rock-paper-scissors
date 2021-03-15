@@ -1,0 +1,465 @@
+@import 'configs';
+
+*{
+    box-sizing: border-box;
+    font-family: $font-stack;
+}
+
+%flex-stack{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+%bg-stack{
+    background-repeat: no-repeat;
+    background-position: center center;
+    position: absolute;
+}
+
+%container{
+    max-width: 1366px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+body{
+    margin: 0;
+    overflow-x: hidden;
+}
+
+header{
+    min-height: 100vh;
+    background-image: radial-gradient(circle at top,$radial-gradient);
+    .container{
+        @extend %container;
+        .score-board{
+            min-height: 20vh;
+            border: 3px solid $header-outline;
+            border-radius: 15px;
+            max-width: 700px;
+            margin: 1rem auto;
+            @extend %flex-stack;
+            justify-content: space-between;
+            padding: 1rem 2rem;
+            color: #fff;
+            .score-board-left{
+                h1{
+                    font-size: 2.4rem;
+                    margin: -1rem 0;
+                    text-transform: uppercase;
+                }
+            }
+            .score-board-right{
+                @extend %flex-stack;
+                flex-direction: column;
+                background-color: #fff;
+                padding: 1rem 2.5rem;
+                border-radius: 10px;
+                h3{
+                    color: $score-text;
+                    text-transform: uppercase;
+                    margin: 0;
+                    margin-top: -0.25rem;
+                    font-weight: 600;
+                    letter-spacing: 1px;
+                    font-size: 1rem;
+                }
+                .score{
+                    margin-top: 0;
+                    margin-bottom: -0.5rem;
+                    color: $dark-text;
+                    font-size: 3.5rem;
+                }
+            }
+        }
+        main{
+            margin-top: 4rem;
+            @extend %flex-stack;
+            .triangle-bg{
+                min-height: 50vh;
+                width: 25rem;
+                @extend %flex-stack;
+                position: relative;
+                img{
+                    width: 20rem;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                }
+                .shapes{
+                    .shape{
+                        background-color: #fff;
+                        height: 9rem;
+                        width: 9rem;
+                        border-radius: 50%;
+                        cursor: pointer;
+                        transition: 0.15s ease all;
+                        &:active{
+                            transform: scale(0.95);
+                        }
+                    }
+                    .paper{
+                        border: 15px solid hsl(230, 89%, 65%);
+                        background-image: url('../images/icon-paper.svg');
+                        @extend %bg-stack;
+                        top: 0;
+                        left: 0;
+                    }
+                    .scissors{
+                        border: 15px solid hsl(40, 84%, 53%);
+                        background-image: url('../images/icon-scissors.svg');
+                        @extend %bg-stack;
+                        top: 0;
+                        right: 0;
+                    }
+                    .rock{
+                        border: 15px solid hsl(349, 71%, 52%);
+                        background-image: url('../images/icon-rock.svg');
+                        @extend %bg-stack;
+                        left: 8rem;
+                        bottom: 0;
+                    }
+                }
+            }
+            .result{
+                display: none;
+                margin-top: -2rem;
+                .triangle-bg{
+                    position: static;
+                    .shapes{
+                        @extend %flex-stack;
+                        .shape{
+                            height: 11rem;
+                            width: 11rem;
+                        }
+                        .player-choice{
+                            @extend %flex-stack;
+                            flex-direction: column;
+                            h2{
+                                text-transform: uppercase;
+                                color: #fff;
+                            }
+                        }
+                        .middle-section{
+                            text-align: center;
+                            .winner{
+                                color: #fff;
+                                text-transform: capitalize;
+                            }
+                            .restart{
+                                background-color: #fff;
+                                padding: 0.8rem 0.5rem;
+                                color: hsl(349, 62%, 48%);
+                                font-weight: 700;
+                                border-radius: 10px;
+                                width: 9rem;
+                                text-align: center;
+                                text-transform: uppercase;
+                                letter-spacing: 2px;
+                                word-spacing: 0.1rem;
+                                cursor: pointer;
+                                transition: 0.3s ease all;
+                                margin: 0 2rem;
+                                &:hover{
+                                    background-color: hsl(349, 78%, 56%);
+                                    color: #fff;
+                                }
+                            }
+                        }
+                        .opponent-choice{
+                            @extend %flex-stack;
+                            flex-direction: column;
+                            h2{
+                                text-transform: uppercase;
+                                color: #fff;
+                            }
+                        }
+                        .shape{
+                            margin: 0 2rem;
+                            cursor: initial;
+                            position: static;
+                            &:active{
+                                transform: scale(1);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .rules{
+        position: absolute;
+        bottom: 25px;
+        right: 25px;
+        color: #fff;
+        border: 2px solid #fff;
+        width: 7.5rem;
+        border-radius: 10px;
+        text-align: center;
+        padding: 0.6rem 1rem;
+        text-transform: uppercase;
+        cursor: pointer;
+        font-weight: 600;
+        letter-spacing: 1px;
+        transition: 0.3s ease all;
+        &:hover{
+            background-color: #fff;
+            color: hsl(237, 49%, 15%);
+        }
+    }
+}
+
+.modal{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    background-color: rgba(0,0,0,0.5);
+    overflow-x: hidden;
+    .modal-container{
+        background-color: #fff;
+        max-width: 400px;
+        margin: 20vh auto;
+        display: flex;
+        flex-direction: column;
+        padding: 1rem 2rem;
+        text-align: center;
+        border-radius: 10px;
+        animation: animateModal 0.5s ease;
+        .modal-header{
+            @extend %flex-stack;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            margin-top: -0.5rem;
+            color: $dark-text;
+            h1{
+                text-transform: uppercase;
+            }
+            i{
+                cursor: pointer;
+            }
+        }
+        .modal-body{
+            padding-bottom: 0.5rem;
+        }
+    }
+}
+
+.attribution{
+    padding: 1rem;
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #fff;
+    background-color: #15163A;
+    a{
+        color: #fff;
+        font-size: 0.9rem;
+    }
+}
+
+@keyframes animateModal{
+    from{
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to{
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+@media(max-width: 625px){
+    header{
+        .container{
+            main{
+                .result{
+                    .triangle-bg{
+                        .shapes{
+                            .shape{
+                                height: 7.5rem;
+                                width: 7.5rem;
+                                margin: 0 1rem;
+                            }
+                            .player-choice{
+                                h2{
+                                    font-size: 1rem;
+                                    text-align: center;
+                                }
+                            }
+                            .middle-section{
+                                text-align: center;
+                                .winner{
+                                    color: #fff;
+                                    text-transform: capitalize;
+                                    font-size: 1.25rem;
+                                }
+                                .restart{
+                                    padding: 0.6rem 0.4rem;
+                                    width: 7.5rem;
+                                    margin: 0 1rem;
+                                }
+                            }
+                            .opponent-choice{
+                                h2{
+                                    font-size: 1rem;
+                                    text-align: center;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media(max-width: 450px){
+    header{
+        .container{
+            .score-board{
+                padding: 1rem 2rem;
+                .score-board-left{
+                    h1{
+                        font-size: 1.75rem;
+                        margin: -0.75rem 0;
+                    }
+                }
+                .score-board-right{
+                    padding: 0.5rem 1.5rem;
+                    h3{
+                        margin: 0;;
+                        font-size: 0.9rem;
+                    }
+                    .score{
+                        margin-bottom: -0.25rem;
+                        font-size: 3rem;
+                    }
+                }
+            }
+            main{
+                margin-top: 3.25rem;
+                .triangle-bg{
+                    width: 20rem;
+                    img{
+                        width: 15rem;
+                    }
+                    .shapes{
+                        .shape{
+                            height: 7rem;
+                            width: 7rem;
+                        }
+                        .paper{
+                            border: 10px solid hsl(230, 89%, 65%);
+                            top: 1rem;
+                            left: 0;
+                        }
+                        .scissors{
+                            border: 10px solid hsl(40, 84%, 53%);
+                            top: 1rem;
+                            right: 0;
+                        }
+                        .rock{
+                            border: 10px solid hsl(349, 71%, 52%);
+                            left: 6.5rem;
+                            bottom: 1.5rem;
+                        }
+                    }
+                }
+                .result{
+                    .triangle-bg{
+                        .shapes{
+                            flex-direction: column;
+                            .shape{
+                                height: 7.5rem;
+                                width: 7.5rem;
+                                margin: 0 1rem;
+                            }
+                            .player-choice{
+                                h2{
+                                    font-size: 1rem;
+                                    text-align: center;
+                                }
+                            }
+                            .middle-section{
+                                text-align: center;
+                                margin: 1.5rem 0;
+                                .winner{
+                                    color: #fff;
+                                    text-transform: capitalize;
+                                    font-size: 1.25rem;
+                                    margin-bottom: 0.5rem;
+                                }
+                                .restart{
+                                    padding: 0.6rem 0.4rem;
+                                    width: 7.5rem;
+                                    margin: 0 1rem;
+                                }
+                            }
+                            .opponent-choice{
+                                h2{
+                                    font-size: 1rem;
+                                    text-align: center;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .rules{
+            bottom: 15px;
+            right: 10px;
+            width: 5rem;
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+        }
+    }
+    .modal{
+        .modal-container{
+            max-width: 300px;
+            .modal-header{
+                h1{
+                    text-transform: uppercase;
+                    font-size: 1.4rem;
+                }
+                i{
+                    font-size: 1.4rem;
+                }
+            }
+            .modal-body{
+                img{
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+@media(max-width: 375px){
+    header{
+        .container{
+            main{
+                .triangle-bg{
+                    .shapes{
+                        .shape{
+                            height: 6rem;
+                            width: 6rem;
+                        }
+                        .rock{
+                            left: 6rem;
+                        }
+                    }
+                }
+            }
+        }
+        .rules{
+            display: none;
+        }
+    }
+}
