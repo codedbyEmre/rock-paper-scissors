@@ -1,7 +1,5 @@
 # Frontend Mentor - Rock, Paper, Scissors
 
-If you want to see the live version of this project, please <a href="https://rock-paper-scissors-main-codedbyemre.netlify.app/" target="_blanck">click here</a>
-
 ![Design preview for the Rock, Paper, Scissors coding challenge](./design/desktop-preview.jpg)
 
 ## Welcome! 👋
